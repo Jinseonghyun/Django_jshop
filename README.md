@@ -1,13 +1,6 @@
 # blog_website_jShop
 Django를 활용한 쇼핑몰
 
-# blog_website_jStory
-Django를 활용한 Blog
-
-# jCloud
-
-Django 활용 페이지 제작 프로젝트
-
 # URL 구조(모놀리식)
 
 ### accounts App
