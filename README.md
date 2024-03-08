@@ -138,3 +138,69 @@ erDiagram
   USER ||--o{ NOTE : Has
 
 ```
+
+# 트러블 슈팅
+
+📦templates
+ ┣ 📂accounts
+ ┃ ┣ 📜login.html
+ ┃ ┗ 📜logout.html
+ ┣ 📂store
+ ┃ ┣ 📜about.html
+ ┃ ┣ 📜home.html
+ ┃ ┗ 📜navbar.html
+ ┗ 📜base.html
+
+### 에러상황 
+에러발견 store 와 accounts 로 app이 분리 되어 있는 상황에서 store > navbar.html 에서  페이지의 상단 위 버튼을 클릭하면 login 페이지로 이동하게 하려고 했다. 그 이유로 아래와 같은 코드를 작성했지만 
+작동이 되지 않았다. 
+```python
+                <li class="nav-item"><a class="nav-link" href="{% url 'accounts/login' %}">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'accounts/logout' %}">Logout</a></li>
+                
+```
+
+### 에러해결방법
+
+### 해결 시도 1.
+파일이름을 지정 해서 에러를 해결하려함  >>> 결과 실패 
+
+코드변경
+```python
+                <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login' %}">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'accounts:logout' %}">Logout</a></li>
+                
+```
+### 해결 시도 2.
+위의 코드와 추가로 accounts 앱의 urls.py 로 이동하여 URL 네임스페이스지정
+```python
+    app_name = 'accounts'
+```
+### 해결 시도 3.
+accounts 의views.py 를 검토 중 아래 코드를 발견하고 html 앞에 폴더 경로를 추가
+
+수정 전
+```python
+    def login(request):
+        return render(request, "login.html")
+
+
+    def logout(request):
+        return render(request, "logout.html")
+```
+
+수정 후
+```python
+    def login(request):
+        return render(request, "accounts/login.html")
+
+
+    def logout(request):
+        return render(request, "accounts/logout.html")
+```
+
+### 에러해결 후 회고
+처음 store라는 앱에서 모든 html 을 만들어 진행을 하다 기능을 추가 하고 싶은 욕심에 앱을 분리해야겠다고 생각하고 코드를 수정하는 과정에서 발생한 에러이다.
+
+이번 기회로 app_name 을 지정해주는 것에 대한 의미와 효과를 제대로 알게 되었다.
+또한 서로 다른 앱에서 html을 연동시키고 싶을 때 url.py 와 views.py 그리고 templates 를 활용하는 방법을 이해했다.
