@@ -151,7 +151,7 @@ erDiagram
  ┃ ┗ 📜navbar.html
  ┗ 📜base.html
 
-### 에러상황 
+### 에러상황 1
 에러발견 store 와 accounts 로 app이 분리 되어 있는 상황에서 store > navbar.html 에서  페이지의 상단 위 버튼을 클릭하면 login 페이지로 이동하게 하려고 했다. 그 이유로 아래와 같은 코드를 작성했지만 
 작동이 되지 않았다. 
 ```python
@@ -162,7 +162,7 @@ erDiagram
 
 ### 에러해결방법
 
-### 해결 시도 1.
+### 해결 시도 1.1
 파일이름을 지정 해서 에러를 해결하려함  >>> 결과 실패 
 
 코드변경
@@ -171,12 +171,12 @@ erDiagram
                 <li class="nav-item"><a class="nav-link" href="{% url 'accounts:logout' %}">Logout</a></li>
                 
 ```
-### 해결 시도 2.
+### 해결 시도 1.2
 위의 코드와 추가로 accounts 앱의 urls.py 로 이동하여 URL 네임스페이스지정
 ```python
     app_name = 'accounts'
 ```
-### 해결 시도 3.
+### 해결 시도 1.3
 accounts 의views.py 를 검토 중 아래 코드를 발견하고 html 앞에 폴더 경로를 추가
 
 수정 전
