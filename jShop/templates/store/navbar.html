@@ -1,0 +1,54 @@
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" href="{% url 'store:home' %}">jShop</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'store:home' %}">홈</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'store:about' %}">소개</a></li>
+
+                {% if user.is_authenticated %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'accounts:logout' %}">로그아웃</a></li>
+                {% else %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login' %}">로그인</a></li>
+
+                <li class="nav-item"><a class="nav-link" href="{% url 'accounts:register' %}">회원가입</a></li>
+                {% endif %}
+                
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">카테고리</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{% url 'store:home' %}">상품 전체보기</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="{% url 'store:category' 'phone' %}">휴대폰</a></li>
+                        <li><a class="dropdown-item" href="{% url 'store:category' 'book' %}">도서</a></li>
+                        <li><a class="dropdown-item" href="{% url 'store:category' 'fruit' %}">과일</a></li>
+                        <li><a class="dropdown-item" href="{% url 'store:category' 'sports' %}">스포츠</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="d-flex">
+                {% comment %} <button class="btn btn-outline-dark" type="submit">
+                    <i class="bi-person-fill me-1"></i>
+                    {% if user.is_authenticated %}
+                        로그아웃
+                    {% else %}
+                        로그인
+                    {% endif %}
+                </button>
+                
+                {% if not user.is_authenticated %}
+                    <button class="btn btn-outline-dark ms-2" type="button" onclick="location.href='{% url 'accounts:register' %}'">
+                        회원가입
+                    </button>
+                {% endif %} {% endcomment %}
+                <a href="{% url 'cart:cart_summary' %}" class="btn btn-outline-dark">
+                    <i class="bi-cart-fill me-1"></i>
+                    장바구니
+                    <span class="badge bg-dark text-white ms-1 rounded-pill" id="cart_quantity">{{ cart|length }}</span>
+                </a>
+            </form>
+        </div>
+    </div>
+</nav>

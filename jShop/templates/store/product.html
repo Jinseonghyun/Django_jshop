@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block content %}
+
+<div class="container">
+<br/>
+    <div class="card mb-3">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img src="{{ product.image.url }}" class="img-fluid rounded-start" alt="...">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+                <center>
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text">{{ product.desciption }}</p>
+                
+                {% if product.is_sale %}
+                <div class="d-flex justify-content-center small text-warning mb-2">
+                    <div class="bi-star-fill"></div>
+                    &nbsp;&nbsp;선착순 특가!!!&nbsp;&nbsp;
+                    <div class="bi-star-fill"></div>
+                </div>                                        
+                <!-- Product price-->
+                <strike>${{ product.price | intcomma }}</strike>
+                &nbsp; ${{ product.sale_price | intcomma }}
+
+                {% else %}
+                    ${{ product.price | intcomma }}
+                    <br/>ID: {{ product.id }}
+                {% endif %}
+                
+                <br/></br>
+                <a href="{% url 'store:home' %}" class="btn btn-secondary">홈으로 돌아가기</a>
+                <button type="button" value="{{ product.id }}" class="btn btn-secondary" id="add-cart">장바구니 담기</button>
+                </center>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+
+<br/></br><br/><br/></br><br/><br/></br><br/><br/></br><br/><br/></br><br/><br/></br><br/><br/></br><br/><br/></br><br/><br/></br><br/><br/></br><br/><br/></br><br/><br/></br><br/><br/></br><br/><br/></br><br/><br/></br><br/>
+
+<script>
+$(document).on('click', '#add-cart', function(e){
+  e.preventDefault();
+  $.ajax({
+    type: 'POST',
+    url: '{% url 'cart:cart_add' %}',
+    data: {
+      product_id: $('#add-cart').val(),
+      csrfmiddlewaretoken: '{{ csrf_token }}',
+      action: 'post'
+    },
+    success: function(json){
+      document.getElementById("cart_quantity").textContent = json.qty
+    },
+    error: function(xhr, errmsg, err){
+    }
+  });
+})
+</script>
+
+
+{% endblock %}
