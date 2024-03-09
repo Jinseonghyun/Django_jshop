@@ -148,9 +148,8 @@ erDiagram
 에러발견 store 와 accounts 로 app이 분리 되어 있는 상황에서 store > navbar.html 에서  페이지의 상단 위 버튼을 클릭하면 login 페이지로 이동하게 하려고 했다. 그 이유로 아래와 같은 코드를 작성했지만 
 작동이 되지 않았다. 
 ```python
-                <li class="nav-item"><a class="nav-link" href="{% url 'accounts/login' %}">Login</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'accounts/logout' %}">Logout</a></li>
-                
+<li class="nav-item"><a class="nav-link" href="{% url 'accounts/login' %}">Login</a></li>
+<li class="nav-item"><a class="nav-link" href="{% url 'accounts/logout' %}">Logout</a></li>
 ```
 
 ### 에러해결방법
@@ -160,8 +159,8 @@ erDiagram
 
 코드변경
 ```python
-                <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login' %}">Login</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'accounts:logout' %}">Logout</a></li>
+<li class="nav-item"><a class="nav-link" href="{% url 'accounts:login' %}">Login</a></li>
+<li class="nav-item"><a class="nav-link" href="{% url 'accounts:logout' %}">Logout</a></li>
                 
 ```
 ### 해결 시도 1.2
@@ -191,6 +190,25 @@ accounts 의views.py 를 검토 중 아래 코드를 발견하고 html 앞에 �
     def logout(request):
         return render(request, "accounts/logout.html")
 ```
+### 에러상황 2
+navbar에 카테고리 검색창을 만들어 클릭을 통해 카테고리를 분류할려고 시도 했었다. 그때 url 주소에 가시성을 주고 싶어서 한글로 지정을 해보았는데 그래서 아래의 코드로 시작을 하게 되었다.
+
+```python
+<li><a class="dropdown-item" href="{% url 'store:category' '휴대폰' %}">휴대폰</a></li>
+<li><a class="dropdown-item" href="{% url 'store:category' '도서' %}">도서</a></li>
+<li><a class="dropdown-item" href="{% url 'store:category' '과일' %}">과일</a></li>
+<li><a class="dropdown-item" href="{% url 'store:category' '스포츠' %}">스포츠</a></li>
+```
+### 해결 시도 2.1
+quote() , parse 등을 찾아서 해결해 보려고 했으나 계속 찾아본 결과 url 주소 창에는 영어로 하는 것이 좀 더 선호되는 올바른 방향성이다 판단을 하였다. 
+그래서 관리자 페이지의 db 에서 category 라는 부분에 한글로 되어있던 데이터들을 영어로 수정하였다. 그리고 코드를 아래와 같이 db name 에 맞게 변경해 주었다.
+```python
+<li><a class="dropdown-item" href="{% url 'store:category' 'phone' %}">휴대폰</a></li>
+<li><a class="dropdown-item" href="{% url 'store:category' 'book' %}">도서</a></li>
+<li><a class="dropdown-item" href="{% url 'store:category' 'fruit' %}">과일</a></li>
+<li><a class="dropdown-item" href="{% url 'store:category' 'sports' %}">스포츠</a></li>
+```
+
 
 ### 에러해결 후 회고
 처음 store라는 앱에서 모든 html 을 만들어 진행을 하다 기능을 추가 하고 싶은 욕심에 앱을 분리해야겠다고 생각하고 코드를 수정하는 과정에서 발생한 에러이다.
