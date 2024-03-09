@@ -190,6 +190,13 @@ accounts 의views.py 를 검토 중 아래 코드를 발견하고 html 앞에 �
     def logout(request):
         return render(request, "accounts/logout.html")
 ```
+### 1.4 에러해결 후 회고
+처음 store라는 앱에서 모든 html 을 만들어 진행을 하다 기능을 추가 하고 싶은 욕심에 앱을 분리해야겠다고 생각하고 코드를 수정하는 과정에서 발생한 에러이다.
+
+이번 기회로 app_name 을 지정해주는 것에 대한 의미와 효과를 제대로 알게 되었다.
+또한 서로 다른 앱에서 html을 연동시키고 싶을 때 url.py 와 views.py 그리고 templates 를 활용하는 방법을 이해했다.
+
+
 ### 에러상황 2
 navbar에 카테고리 검색창을 만들어 클릭을 통해 카테고리를 분류할려고 시도 했었다. 그때 url 주소에 가시성을 주고 싶어서 한글로 지정을 해보았는데 그래서 아래의 코드로 시작을 하게 되었다.
 
@@ -201,7 +208,7 @@ navbar에 카테고리 검색창을 만들어 클릭을 통해 카테고리를 �
 ```
 ### 해결 시도 2.1
 quote() , parse 등을 찾아서 해결해 보려고 했으나 계속 찾아본 결과 url 주소 창에는 영어로 하는 것이 좀 더 선호되는 올바른 방향성이다 판단을 하였다. 
-그래서 관리자 페이지의 db 에서 category 라는 부분에 한글로 되어있던 데이터들을 영어로 수정하였다. 그리고 코드를 아래와 같이 db name 에 맞게 변경해 주었다.
+그래서 관리자 페이지의 db 에서 category 라는 부분에 한글로 되어있던 데이터들을 영어로 수정하였다. 그리고 코드를 아래와 같이 db name 에 맞게 변경해 주었지만 왜 인가 계속 category 파일을 찾지 못하는 에러가 발생했다.
 ```python
 <li><a class="dropdown-item" href="{% url 'store:category' 'phone' %}">휴대폰</a></li>
 <li><a class="dropdown-item" href="{% url 'store:category' 'book' %}">도서</a></li>
@@ -209,9 +216,21 @@ quote() , parse 등을 찾아서 해결해 보려고 했으나 계속 찾아본 
 <li><a class="dropdown-item" href="{% url 'store:category' 'sports' %}">스포츠</a></li>
 ```
 
+### 2.2 에러해결 후 회고
+urls.py 와 views.py category 와 연관된 navbar.html, category.html 까지 에러와 관련된 것을 찾기 위해 시간을 쏟았다. 이후 원인을 발견했는데 views.py 에서 return 값에 request 가 빠져있었다....
+이것을 해결하기 위해 에러를 찾는데 투자한 순수 시간이 2시간 정도 되었는데 너무 허무하지만 다행이다 찾았다 라는 감정도 들었다. 내가 이걸 왜 안했지? 보다가 보니 이 코드가 category 라는 함수안에 있는 try, except 의 한 부분인데 그 아래있는 redirect 와 혼용을 해서 사용하다보니 그냥 넘어간거 같다. 또한 당연히 이 부분은 체크를 몇번씩 했는데 왜 눈에 보이지 않았을까 라는 생각도 하였고 하지만 이런 작은 오타로 현업에서도 충분히 시간을 보낼 수 있고 꼼꼼한 코드를 작성하기 위해 코드를 체크하는 습관을 더욱 들이자 다짐했다.
 
-### 에러해결 후 회고
-처음 store라는 앱에서 모든 html 을 만들어 진행을 하다 기능을 추가 하고 싶은 욕심에 앱을 분리해야겠다고 생각하고 코드를 수정하는 과정에서 발생한 에러이다.
 
-이번 기회로 app_name 을 지정해주는 것에 대한 의미와 효과를 제대로 알게 되었다.
-또한 서로 다른 앱에서 html을 연동시키고 싶을 때 url.py 와 views.py 그리고 templates 를 활용하는 방법을 이해했다.
+수정 전 
+```python
+        return render(
+             "store/category.html", {"products": products, "category": category}
+        )
+```
+
+수정 후 
+```python
+        return render(
+            requset, "store/category.html", {"products": products, "category": category}
+        )
+```
