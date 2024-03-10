@@ -29,8 +29,22 @@
                     ${{ product.price | intcomma }}
                     <br/>ID: {{ product.id }}
                 {% endif %}
-                
-                <br/></br>
+
+                    <br/></br/>
+                    <div class="row justify-content-center">
+                        <div class="col-md-2">수량:</div>
+                          <div class="col-md-2">
+                          <select class="form-select form-select-sm" id="qty_cart">
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                          </select>
+                          </div>
+                    </div>                             
+                    <br/><br/>
+                  
                 <a href="{% url 'store:home' %}" class="btn btn-secondary">홈으로 돌아가기</a>
                 <button type="button" value="{{ product.id }}" class="btn btn-secondary" id="add-cart">장바구니 담기</button>
                 </center>
@@ -50,11 +64,13 @@ $(document).on('click', '#add-cart', function(e){
     url: '{% url 'cart:cart_add' %}',
     data: {
       product_id: $('#add-cart').val(),
+      product_qty: $('#qty_cart option:selected').text(),
       csrfmiddlewaretoken: '{{ csrf_token }}',
       action: 'post'
     },
     success: function(json){
-      document.getElementById("cart_quantity").textContent = json.qty
+      document.getElementById("cart_quantity").textContent = json.상품수
+      location.reload();
     },
     error: function(xhr, errmsg, err){
     }

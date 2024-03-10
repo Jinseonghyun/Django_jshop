@@ -9,17 +9,26 @@
                 <li class="nav-item"><a class="nav-link" href="{% url 'store:about' %}">소개</a></li>
 
                 {% if user.is_authenticated %}
-                <li class="nav-item"><a class="nav-link" href="{% url 'accounts:logout' %}">로그아웃</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">프로필</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{% url 'accounts:update_user' %}">사용자 프로필</a></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li><a class="dropdown-item" href="{% url 'accounts:update_info' %}">사용자 정보</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="nav-item"><a class="nav-link" href="{% url 'accounts:logout' %}">로그아웃</a></li>
                 {% else %}
-                <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login' %}">로그인</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login' %}">로그인</a></li>
 
-                <li class="nav-item"><a class="nav-link" href="{% url 'accounts:register' %}">회원가입</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'accounts:register' %}">회원가입</a></li>
                 {% endif %}
                 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">카테고리</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="{% url 'store:home' %}">상품 전체보기</a></li>
+                        <li><a class="dropdown-item" href="{% url 'store:category_summary' %}">전체 카테고리</a></li>
                         <li><hr class="dropdown-divider" /></li>
                         <li><a class="dropdown-item" href="{% url 'store:category' 'phone' %}">휴대폰</a></li>
                         <li><a class="dropdown-item" href="{% url 'store:category' 'book' %}">도서</a></li>

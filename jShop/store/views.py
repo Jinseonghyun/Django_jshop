@@ -27,3 +27,8 @@ def category(requset, s):
     except:
         messages.success(requset, ("카테고리가 존재하지 않습니다."))
         return redirect("store/home.html")
+
+
+def category_summary(requset):
+    categories = Category.objects.all()
+    return render(requset, "store/category_summary.html", {"categories": categories})

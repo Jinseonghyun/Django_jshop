@@ -10,6 +10,122 @@
         </div>
     </div>
 </header>
+<br/>
+<div class="container">
+    {% if cart_products %}
+        {% for product in cart_products %}
+    <div class="container">
+        <br/>
+            <div class="card mb-3">
+                <div class="row g-0">
+                  <div class="col-md-4">
+                    <img src="{{ product.image.url }}" class="img-fluid rounded-start" alt="...">
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                        <center>
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">{{ product.desciption }}</p>
+                        
+                        {% if product.is_sale %}
+                        <div class="d-flex justify-content-center small text-warning mb-2">
+                            <div class="bi-star-fill"></div>
+                            &nbsp;&nbsp;선착순 특가!!!&nbsp;&nbsp;
+                            <div class="bi-star-fill"></div>
+                        </div>                                        
+                        <!-- Product price-->
+                        <strike>${{ product.price | intcomma }}</strike>
+                        &nbsp; ${{ product.sale_price | intcomma }}
+        
+                        {% else %}
+                            ${{ product.price | intcomma }}
+                            <br/>ID: {{ product.id }}
+                        {% endif %}
+                            <br/></br>
+                            <div class="row justify-content-center">
+                                <div class="col-md-2">수량:</div>
+                                  <div class="col-md-2">
+                                  <select class="form-select form-select-sm" id="select{{ product.id }}">
+                                        <option selected>                                        
+                                            {% for key, value in quantities.items %}
+                                                {% if key == product.id|slugify %}
+                                                    {{ value }}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                  </select>
+                                  </div>
+                            </div>                                    
+                            <br/></br/>
+                        <a href="{% url 'store:home' %}" class="btn btn-secondary">홈으로 돌아가기</a>
+                        <button type="button" data-index="{{ product.id }}" class="btn btn-secondary update-cart" >수량 변경</button>
+                        <button type="button" data-index="{{ product.id }}" class="btn btn-danger delete-product" >상품 제거</button>
+                        </center>
+                    </div>
+                  </div>
+                </div>
+
+    {% endfor %}
+    <h3>장바구니 금액: ${{ totals | intcomma }}원</h3>
+    
+    <br/><br/><br/>
+    {% else %}
+    장바구니에 상품이 없습니다.<br/> 상품을 추가해보세요.
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+{% endif %}
+</div>
+
 
 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+
+<script>
+//product_qty_change
+$(document).on('click', '.update-cart', function(e){
+    e.preventDefault();
+
+    var productid = $(this).data('index');
+    $.ajax({
+        type: 'POST',
+        url: '{% url 'cart:cart_update' %}',
+        data: {
+        product_id: $(this).data('index'),
+        product_qty: $('#select' + productid + ' option:selected').text(),
+        csrfmiddlewaretoken: '{{ csrf_token }}',
+        action: 'post'
+        },
+        success: function(json){
+        location.reload();
+        },
+        error: function(xhr, errmsg, err){
+        }
+    });
+    })
+
+//product_delete
+    $(document).on('click', '.delete-product', function(e){
+        e.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'cart:cart_delete' %}',
+            data: {
+            product_id: $(this).data('index'),
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            action: 'post'
+            },
+            success: function(json){
+            location.reload();
+            },
+            error: function(xhr, errmsg, err){
+            }
+        });
+        })
+</script>
+
 {% endblock %}
