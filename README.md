@@ -40,15 +40,15 @@ payment app:
   - bootstrap
 
 ### 2.2 URL 구조(모놀리식)
-- **config (main app)**
+- **config (main)**
 
 | App       | URL                                        | Views Function    | HTML File Name               | Note           |
 |-----------|--------------------------------------------|-------------------|------------------------------|----------------|
 | config    | 'admin/'                                   | (N/A)             | (N/A)                        | Django Admin   |
-| config    | ''                                         | (N/A)             | (N/A)                        | store.urls include|
-| config    | 'accounts/'                                | (N/A)             | (N/A)                        | accounts.urls include|
-| config    | 'cart/'                                    | (N/A)             | (N/A)                        | cart.urls include|
-| config    | 'payment/'                                 | (N/A)             | (N/A)                        | payment.urls include|
+| config    | ''                                         | home              | store/home.html              | 홈화면
+| config    | 'accounts/'                                | (N/A)             | (N/A)                        | accounts.urls include 참조|
+| config    | 'cart/'                                    | (N/A)             | (N/A)                        | cart.urls include 참조|
+| config    | 'payment/'                                 | (N/A)             | (N/A)                        | payment.urls include 참조|
 
 
 - **accounts**
@@ -104,6 +104,11 @@ subgraph cluster_main
   D --> E
 end
 
+```
+
+```mermaid
+graph TB
+
 subgraph cluster_accounts
   F[로그인] -->|로그인 성공| G(메인 페이지)
   F -->|회원가입| H(회원가입)
@@ -118,6 +123,11 @@ subgraph cluster_accounts
   J -->|주문 결제| J3(주문 결제)
 end
 
+```
+
+```mermaid
+graph TB
+
 subgraph cluster_cart
   L[장바구니 페이지] -->|장바구니 상품 목록| M(장바구니 상품 목록)
   L --> N(장바구니 상품 추가)
@@ -126,11 +136,21 @@ subgraph cluster_cart
   M --> Q{주문 결제}
 end
 
+```
+
+```mermaid
+graph TB
+
 subgraph cluster_payment
   R[결제 페이지] -->|결제 성공| S(주문 완료 페이지)
   R -->|주문 정보 입력| T(주문 정보 입력)
   T --> U(결제 성공)
 end
+
+```
+
+```mermaid
+graph TB
 
 subgraph cluster_store
   V[홈 화면] -->|상품 목록| W(상품 목록)
@@ -549,8 +569,7 @@ stateDiagram-v2
 코드변경
 ```python
 <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login' %}">Login</a></li>
-<li class="nav-item"><a class="nav-link" href="{% url 'accounts:logout' %}">Logout</a></li>
-                
+<li class="nav-item"><a class="nav-link" href="{% url 'accounts:logout' %}">Logout</a></li>            
 ```
 #### 해결 시도 8.1.2
 위의 코드와 추가로 accounts 앱의 urls.py 로 이동하여 URL 네임스페이스지정
