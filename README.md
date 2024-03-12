@@ -104,6 +104,11 @@ subgraph cluster_main
   D --> E
 end
 
+```
+
+```mermaid
+graph TB
+
 subgraph cluster_accounts
   F[로그인] -->|로그인 성공| G(메인 페이지)
   F -->|회원가입| H(회원가입)
@@ -118,6 +123,11 @@ subgraph cluster_accounts
   J -->|주문 결제| J3(주문 결제)
 end
 
+```
+
+```mermaid
+graph TB
+
 subgraph cluster_cart
   L[장바구니 페이지] -->|장바구니 상품 목록| M(장바구니 상품 목록)
   L --> N(장바구니 상품 추가)
@@ -126,11 +136,21 @@ subgraph cluster_cart
   M --> Q{주문 결제}
 end
 
+```
+
+```mermaid
+graph TB
+
 subgraph cluster_payment
   R[결제 페이지] -->|결제 성공| S(주문 완료 페이지)
   R -->|주문 정보 입력| T(주문 정보 입력)
   T --> U(결제 성공)
 end
+
+```
+
+```mermaid
+graph TB
 
 subgraph cluster_store
   V[홈 화면] -->|상품 목록| W(상품 목록)
