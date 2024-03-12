@@ -521,7 +521,7 @@ stateDiagram-v2
 
 ```
 ## 8. 에러와 에러 해결 (트러블슈팅)
-
+```
 📦templates
  ┣ 📂accounts
  ┃ ┣ 📜login.html
@@ -531,6 +531,7 @@ stateDiagram-v2
  ┃ ┣ 📜home.html
  ┃ ┗ 📜navbar.html
  ┗ 📜base.html
+```
 
 #### 에러상황 8.1
 에러발견 store 와 accounts 로 app이 분리 되어 있는 상황에서 store > navbar.html 에서  페이지의 상단 위 버튼을 클릭하면 login 페이지로 이동하게 하려고 했다. 그 이유로 아래와 같은 코드를 작성했지만 
