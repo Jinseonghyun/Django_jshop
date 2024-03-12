@@ -569,8 +569,7 @@ stateDiagram-v2
 코드변경
 ```python
 <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login' %}">Login</a></li>
-<li class="nav-item"><a class="nav-link" href="{% url 'accounts:logout' %}">Logout</a></li>
-                
+<li class="nav-item"><a class="nav-link" href="{% url 'accounts:logout' %}">Logout</a></li>            
 ```
 #### 해결 시도 8.1.2
 위의 코드와 추가로 accounts 앱의 urls.py 로 이동하여 URL 네임스페이스지정
