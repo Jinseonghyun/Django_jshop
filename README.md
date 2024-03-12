@@ -40,15 +40,15 @@ payment app:
   - bootstrap
 
 ### 2.2 URL 구조(모놀리식)
-- **config (main app)**
+- **config (main)**
 
 | App       | URL                                        | Views Function    | HTML File Name               | Note           |
 |-----------|--------------------------------------------|-------------------|------------------------------|----------------|
 | config    | 'admin/'                                   | (N/A)             | (N/A)                        | Django Admin   |
-| config    | ''                                         | (N/A)             | (N/A)                        | store.urls include|
-| config    | 'accounts/'                                | (N/A)             | (N/A)                        | accounts.urls include|
-| config    | 'cart/'                                    | (N/A)             | (N/A)                        | cart.urls include|
-| config    | 'payment/'                                 | (N/A)             | (N/A)                        | payment.urls include|
+| config    | ''                                         | home              | store/home.html              | 홈화면
+| config    | 'accounts/'                                | (N/A)             | (N/A)                        | accounts.urls include 참조|
+| config    | 'cart/'                                    | (N/A)             | (N/A)                        | cart.urls include 참조|
+| config    | 'payment/'                                 | (N/A)             | (N/A)                        | payment.urls include 참조|
 
 
 - **accounts**
