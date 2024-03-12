@@ -385,7 +385,7 @@ gantt
 
 ### 5.1 와이어프레임
 
-<img src="Wireframe.png" width="60%">
+<img src="Wireframe.png">
 
 ### 5.2 화면 설계
 
@@ -642,3 +642,26 @@ urls.py 와 views.py category 와 연관된 navbar.html, category.html 까지 �
             requset, "store/category.html", {"products": products, "category": category}
         )
 ```
+
+### 에러상황 8.3
+cart 앱을 만들고 그 속에서 장바구니를 구현하는데 있어서 버튼을 만드는 것에 시간이 많이 걸렸다. 코드는 아래와 같다. 장바구니 속 <a></a> 태그를 통해 이미 구현되어 있던 홈으로 돌아가기 말고 버튼을 두어서 수량을 변경하고 , 상품을 제거하는 기능을 추가하려고 하였다.
+
+```python
+<a href="{% url 'store:home' %}" class="btn btn-secondary">홈으로 돌아가기</a>
+<button type="button" value="{{ product.id }}" class="btn btn-secondary" >수량 변경</button>
+<button type="button" value="{{ product.id }}" class="btn btn-danger" >상품 제거</button>
+```
+
+#### 해결 시도 8.3.1
+에러를 해결하기 위해 원인을 찾아 보다가 추가하는 버튼들이 동일한 ID를 가지게 할 수 없다는 것을 히해하였다. 현재 jQuery 와 Ajax를 통하여 세션을 업데이트하고 있음으로 버튼을 서로 구별해야 하는데 이를 수행하기 위해 각 버튼에 고유한 데이터 인덱스 번호를 할당 해야한다는 정보를 찾을 수 있었다. 현재 상품의 ID 번호가 고유한 번호이기에 이를 사용해야 겠다고 생각했다. 그래서 코드에서 value 를 data-index 로 수정을 하였다.
+
+이후 jQuery를 통해 버튼을 클릭한 시기를 알아내어 로직을 작성하기 위해 순서대로 update-cart,delete-product 라는 class 부여 
+
+```python
+<a href="{% url 'store:home' %}" class="btn btn-secondary">홈으로 돌아가기</a>
+<button type="button" data-index="{{ product.id }}" class="btn btn-secondary update-cart" >수량 변경</button>
+<button type="button" data-index="{{ product.id }}" class="btn btn-danger delete-product" >상품 제거</button>
+```
+
+#### 8.3.2 에러해결 후 회고
+jQuery 와 Ajex 처음 활용하다 보니 이해도나 개념이 아직 부족한 것을 느꼈다. 에러를 해결 하면서 알게 된 것은 클릭 이벤트가 발생했을 때 스크립트에서 해당 클래스를 찾아서 업데이트하는 함수를 호출하거나, AJAX를 사용하여 서버에 업데이트 요청을 보내는 등의 동적인 작업을 할 때 정말 내가 보고자 하는 것이 고유한 것인지 또 고유하게 사용하고 있는것인지를 잘 확인해야함을 이해했다.
