@@ -458,7 +458,7 @@ gantt
 </table>
 
 ## 6. 데이터베이스 모델링(ERD)
-* 아래 ERD는 머메이드를 사용했습니다.
+
 ```mermaid
 erDiagram
     user ||--o{ post : write
