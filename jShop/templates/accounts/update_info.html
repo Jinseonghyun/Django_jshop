@@ -15,11 +15,17 @@
     <div class="row">
             <div class="col-md-6 offset-md-3">        
                 <br/><br/>
+                <strong>배송지 정보<strong>
+                <br/><br/>
                 <form method="POST" action="{% url 'accounts:update_info' %}">
                     {% csrf_token %}
 
                     {{ form.as_p }}
                     <br/><br/>
+                    <strong>배송지 정보 확인<strong>
+                    <br/><br/>
+                    {{ shipping_form.as_p }}
+
                     <button type="submit" class="btn btn-secondary">
                         프로필 변경
                     </button>
