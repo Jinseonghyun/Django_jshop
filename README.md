@@ -2,7 +2,7 @@
 
 # 시연영상
 <p align="center">
-  <img src="file:///C:/Users/Jin/Downloads/jShop%20%EC%8B%9C%EC%97%B0%EC%98%81%EC%83%81.gif">
+  <img src="file:///C:/Users/Jin/Desktop/project/django_website/jShop%20%EC%8B%9C%EC%97%B0%EC%98%81%EC%83%81.gif">
 </p>
 
 ## 1. 목표와 기능
