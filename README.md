@@ -1,9 +1,8 @@
 # Django를 활용한 쇼핑몰 jShop
 
-# 시연영상
-<p align="center">
-  <img src="file:///C:/Users/Jin/Desktop/project/django_website/jShop%20%EC%8B%9C%EC%97%B0%EC%98%81%EC%83%81.gif">
-</p>
+<!-- # 데모영상
+![demo](file:///C:/Users/Jin/Desktop/project/django_website/jShop%20%EC%8B%9C%EC%97%B0%EC%98%81%EC%83%81.gif) -->
+
 
 ## 1. 목표와 기능
 
